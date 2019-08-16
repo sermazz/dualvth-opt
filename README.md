@@ -1,7 +1,10 @@
 # Dual-V<sub>TH</sub> optimization script with gate resizing
-This project, developed in the context of the _Synthesis and Optimization of Digital Systems_ course (Prof. Andrea Calimera, Politecnico di Torino, A.Y. 2018/'19), consists in a Tcl procedure to be embedded in Synopsys PrimeTime for a constrained multi-objective post-synthesis optimization of a netlist of standard cells. This algorithm has been awarded with the first place in the course contest, among  the other projects of the 2019 SODS course.
+This project, developed in the context of the _Synthesis and Optimization of Digital Systems_ course (Prof. Andrea Calimera, Politecnico di Torino, A.Y. 2018/'19), consists in a Tcl procedure to be used within Synopsys PrimeTime for a constrained multi-objective post-synthesis optimization of a netlist of standard cells. This algorithm has been awarded with the first place in the course contest, among  the other projects of the 2019 SODS course.
 
-Given an input `savings` parameter, the `dualVth` procedure performs a dual-V<sub>TH</sub> cell assignment with gate resizing, with the aim to meet the constraint on the **leakage power** while looking for a tradeoff between **dynamic power** consumption and worst case **slack** in the **smallest possible time**. The backbone of the algorithm is a `while` loop divided into three main parts, described in the following.
+Given an input `savings` parameter, the `dualVth` procedure performs a dual-V<sub>TH</sub> cell assignment with gate resizing of the loaded netlist, with the aim to meet the constraint on the **leakage power** while looking for a tradeoff between **dynamic power** consumption and worst case **slack** in the **smallest possible time**. 
+The implementation of the algorithm is based on the _ST CMOS 65nm_ technology library.
+
+The backbone of the algorithm is a `while` loop divided into three main parts, described in the following.
 
 ### 1. Dynamic power - slack tradeoff
 Firstly, a transformation aimed to improve the tradeoff between dynamic power and worst case slack is performed. A good approach proved to be to define two parameters, ![varepsilon](docs/img/epsilon.png) and ![gamma](docs/img/gamma.png): the algorithm resizes to smaller all cells with `max_slack` > ![gamma](docs/img/gamma.png), to save dynamic (and leakage) power with non-critical cells, and to bigger the ones with `max_slack` < ![varepsilon](docs/img/epsilon.png), to try to improve the worst case slack.
